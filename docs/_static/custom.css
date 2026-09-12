@@ -1,0 +1,13 @@
+/* Use the theme's system fonts and keep long scientific expressions readable. */
+.content {
+  width: min(100%, 56rem);
+}
+
+.math-wrapper {
+  overflow-x: auto;
+}
+
+article .mermaid {
+  overflow-x: auto;
+  margin-block: 1.5rem;
+}
