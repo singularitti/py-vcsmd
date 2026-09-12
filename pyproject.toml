@@ -1,18 +1,25 @@
 [project]
 name = "vcsmd"
 version = "0.1.0"
-description = "A Python reimplementation of Renata's VCSMD Fortran code"
+description = "Pure, unit-aware variable-cell molecular dynamics in Python"
 readme = "README.md"
 authors = [
     { name = "singularitti", email = "singularitti@outlook.com" }
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.10"
 dependencies = [
-    "numpy>=2.5.3",
+    "numpy>=1.26,<3",
+    "pint>=0.24.4,<0.27",
+    "PyYAML>=6,<7",
+    "tomli>=2; python_version < '3.11'",
+    "tomli-w>=1.2,<2",
 ]
 
 [project.scripts]
-vcsmd = "vcsmd:main"
+vcsmd = "vcsmd.cli:main"
+
+[dependency-groups]
+dev = ["ruff>=0.12", "matplotlib>=3.8"]
 
 [build-system]
 requires = ["uv_build>=0.12.13,<0.13.0"]
