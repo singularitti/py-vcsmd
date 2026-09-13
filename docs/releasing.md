@@ -1,7 +1,7 @@
 # Publishing a release
 
 The build workflow runs on pushes and pull requests targeting `main`. It builds
-the source distribution and wheel on Python 3.9 through 3.14, checks distribution
+the source distribution and wheel on Python 3.10 through 3.14, checks distribution
 metadata, installs the wheel and its dependencies, imports the installed modules,
 and checks both CLI entry points. These checks do not run simulations.
 

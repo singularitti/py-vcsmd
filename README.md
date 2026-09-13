@@ -1,6 +1,6 @@
 # Python VCSMD
 
-`vcsmd` is a Python 3.9+ implementation of classical variable-cell molecular dynamics with a pure NumPy numerical core and a Pint-aware application boundary. It implements the eight active fixed-cell, Parrinello–Rahman, modified-metric, and reference-strain formulations described by the historical VCSMD project. The numerical model contains resolved arrays and scalars; configuration files, checkpoints, legacy files, progress, and output writing live in adapters around that core.
+`vcsmd` is a Python 3.10+ implementation of classical variable-cell molecular dynamics with a pure NumPy numerical core and a Pint-aware application boundary. It implements the eight active fixed-cell, Parrinello–Rahman, modified-metric, and reference-strain formulations described by the historical VCSMD project. The numerical model contains resolved arrays and scalars; configuration files, checkpoints, legacy files, progress, and output writing live in adapters around that core.
 
 The scientific scope is hydrostatic-pressure classical Lennard–Jones dynamics. The active potential is configurable through global `sigma` and `epsilon` parameters, with the original argon values available as the named `argon` preset. Tabulated potentials, electronic-structure calculations, tensor external stress, crystal-standardization operations, and inactive historical experiments are outside this package.
 
@@ -8,7 +8,7 @@ To understand the implementation, start with the [code structure and walkthrough
 
 ## Install
 
-The package requires Python 3.9 or newer. With [uv](https://docs.astral.sh/uv/):
+The package requires Python 3.10 or newer. With [uv](https://docs.astral.sh/uv/):
 
 ```bash
 uv sync

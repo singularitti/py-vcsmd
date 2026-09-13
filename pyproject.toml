@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "singularitti", email = "singularitti@outlook.com" }
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.26,<3",
     "pint>=0.24.4,<0.27",

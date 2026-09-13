@@ -21,7 +21,7 @@ uv sync --group docs --no-default-groups --python 3.14
 ```
 
 The `docs` dependency group is separate from runtime dependencies. The package
-declares Python 3.9+ support. `uv sync` creates a local `uv.lock` automatically,
+declares Python 3.10+ support. `uv sync` creates a local `uv.lock` automatically,
 but the lockfile is ignored by Git and is not required in a checkout. CI
 resolves the dependency ranges in `pyproject.toml` on each fresh run. Builds
 can therefore pick up newer compatible releases over time.

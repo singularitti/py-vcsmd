@@ -1,6 +1,6 @@
 # Getting started
 
-VCSMD requires **Python 3.9 or newer**. The commands below assume a local
+VCSMD requires **Python 3.10 or newer**. The commands below assume a local
 checkout and run from the repository root.
 
 ## Install
