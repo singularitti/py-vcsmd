@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "mode": "metric-dyn",
+  "structure": {
+    "cell": {
+      "values": [
+        [
+          11.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          11.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          11.0
+        ]
+      ],
+      "unit": "bohr"
+    },
+    "fractional_positions": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.5,
+        0.5,
+        0.0
+      ],
+      [
+        0.0,
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.0,
+        0.5
+      ]
+    ],
+    "masses": {
+      "values": [
+        33072.479999999996,
+        33072.479999999996,
+        33072.479999999996,
+        33072.479999999996
+      ],
+      "unit": "rydberg_mass"
+    },
+    "species": [
+      "Ar",
+      "Ar",
+      "Ar",
+      "Ar"
+    ]
+  },
+  "potential": {
+    "sigma": {
+      "value": 6.425071384432807,
+      "unit": "bohr"
+    },
+    "epsilon": {
+      "value": 0.0007643798968087139,
+      "unit": "rydberg"
+    }
+  },
+  "timestep": {
+    "value": 200.0,
+    "unit": "rydberg_time"
+  },
+  "steps": 1000,
+  "cutoff": {
+    "value": 40.0,
+    "unit": "bohr"
+  },
+  "image_range": [
+    6,
+    6,
+    6
+  ],
+  "external_pressure": {
+    "value": 0.0,
+    "unit": "rydberg / bohr ** 3"
+  },
+  "cell_inertia": {
+    "value": 0.9186799999999999,
+    "unit": "rydberg_mass / bohr ** 4"
+  },
+  "temperature": {
+    "value": 0.0,
+    "unit": "kelvin"
+  },
+  "temperature_control": {
+    "interval": 2200,
+    "max_rescales": 10,
+    "relative_tolerance": 0.001
+  },
+  "initialization": {
+    "mode": "thermal",
+    "seed": 119
+  },
+  "output_interval": 1,
+  "title": "Test: md of Ar atom in fcc cell                        (title)"
+}
