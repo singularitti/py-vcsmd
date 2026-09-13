@@ -1,10 +1,10 @@
 """One-way readers for the historical VCSMD input and output formats.
 
-The modules in :mod:`vcsmd.compat` deliberately have no dependency on the
-numerical implementation.  They turn the fixed-format files written by the
-Fortran program into the native, JSON/CSV-friendly data contract used by the
-application layer.  Historical calculation codes and filenames are confined
-to this package.
+These adapters turn historical fixed-format files into native configuration
+mappings and CSV import datasets. Parsing uses no solver operations; conversion
+validates generated configurations through the native configuration adapter.
+The computational core never imports this package. Historical calculation codes
+and filenames are confined to this compatibility boundary.
 """
 
 from .legacy import (

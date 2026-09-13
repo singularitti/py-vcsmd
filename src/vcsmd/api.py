@@ -102,6 +102,13 @@ class SimulationState:
 
 @dataclass(frozen=True)
 class Observables:
+    """Measurements for one completed step, before rescaling or quenching.
+
+    Dimensional values are Pint quantities. Atomic temperature uses particle
+    kinetic energy; extended temperature also includes cell kinetic energy.
+    The running extended temperature is the quantity used by the controller.
+    """
+
     step_index: int
     time: pint.Quantity
     atomic_potential_energy: pint.Quantity
@@ -120,6 +127,7 @@ class Observables:
 
 
 def with_units(observables: NumericalObservables) -> Observables:
+    """Attach physical units to normalized measurements without changing them."""
     values = {}
     for item in fields(observables):
         name = item.name
@@ -143,6 +151,13 @@ def with_units(observables: NumericalObservables) -> Observables:
 
 @dataclass(frozen=True)
 class StepResult:
+    """An independently owned next state, measurements, and controller events.
+
+    ``observables`` precede controller actions within the step. ``state`` is
+    after those actions and is the state to pass to the next step or save.
+    Events describe actions for the caller to report; no logging occurs here.
+    """
+
     state: SimulationState
     observables: Observables
     events: tuple[SimulationEvent, ...] = ()
@@ -151,10 +166,24 @@ class StepResult:
 def initialize(
     model: NumericalModel, initial_conditions: InitialConditions, *, seed: int
 ) -> SimulationState:
+    """Create the public state from the two objects returned by ``prepare``.
+
+    ``seed`` is explicit and affects only a local random generator. Thermal
+    initialization removes global center-of-mass momentum; provided velocities
+    must already satisfy that constraint. The returned state includes Beeman
+    history, exposes physical quantities, and owns read-only numerical arrays.
+    No input arrays are modified and no files are accessed.
+    """
     return SimulationState(dynamics.initialize(model, initial_conditions, seed=seed))
 
 
 def step(model: NumericalModel, state: SimulationState) -> StepResult:
+    """Advance one Beeman step without changing ``model`` or ``state``.
+
+    Pass a state returned by this public API or ``vcsmd.io.load_checkpoint``.
+    The result includes dimensional observables and any rescaling or quenching
+    events. Its next state can be passed back to this function unchanged.
+    """
     result = dynamics.step(model, state.numerical)
     return StepResult(
         SimulationState(result.state), with_units(result.observables), result.events
@@ -164,6 +193,13 @@ def step(model: NumericalModel, state: SimulationState) -> StepResult:
 def simulate(
     model: NumericalModel, initial_state: SimulationState, *, steps: int
 ) -> Iterator[StepResult]:
+    """Yield exactly ``steps`` successive results from the supplied state.
+
+    ``steps`` is a nonnegative count of additional steps. Results are generated
+    lazily, so the caller controls iteration and need not retain a trajectory
+    in memory. Each result owns its numerical state; retaining a result does
+    not cause later steps to modify it. This function performs no file I/O.
+    """
     for result in dynamics.simulate(model, initial_state.numerical, steps=steps):
         yield StepResult(
             SimulationState(result.state), with_units(result.observables), result.events

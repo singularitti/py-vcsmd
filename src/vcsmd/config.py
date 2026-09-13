@@ -63,6 +63,12 @@ class Structure:
 
 @dataclass(frozen=True)
 class LennardJones:
+    """One global Lennard–Jones interaction with dimensional sigma and epsilon.
+
+    All particles share these parameters; species labels do not select separate
+    interactions. Use ``original_argon()`` for the source's numeric preset.
+    """
+
     sigma: pint.Quantity = field(default_factory=lambda: Quantity(3.4, "angstrom"))
     epsilon: pint.Quantity = field(
         default_factory=lambda: Quantity(0.0104, "electron_volt")
@@ -76,6 +82,14 @@ class LennardJones:
 
 @dataclass(frozen=True)
 class SimulationConfig:
+    """User-facing inputs for a complete run, independent of file format.
+
+    Dimensional fields are Pint quantities and categorical fields are enums.
+    ``prepare`` validates and normalizes these inputs into a ``NumericalModel``
+    and ``InitialConditions``. Step count, output cadence, title, and seed are
+    application settings; they are not hidden mutable state of the solver.
+    """
+
     structure: Structure
     mode: SimulationMode
     timestep: pint.Quantity

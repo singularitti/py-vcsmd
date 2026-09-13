@@ -405,6 +405,14 @@ def run(
     checkpoint_interval: int = 100,
     progress: Callable[[int, int], None] | None = None,
 ) -> RunReport:
+    """Execute all configured steps and write a documented native run folder.
+
+    This application boundary owns file access: it snapshots inputs, streams
+    CSV series, and writes periodic and final checkpoints. ``progress`` is an
+    optional callback receiving completed and requested step counts. The report
+    contains completion status and the public final state; execution failures
+    preserve available outputs and the last valid state for inspection.
+    """
     model, initial = prepare(config)
     return _execute(
         model,
@@ -432,6 +440,13 @@ def resume(
     checkpoint_interval: int = 100,
     progress: Callable[[int, int], None] | None = None,
 ) -> RunReport:
+    """Continue a native checkpoint for ``steps`` additional integration steps.
+
+    The checkpoint supplies the model, velocities, acceleration histories,
+    reference cell, and controller accumulators. No thermal reinitialization
+    occurs. Outputs go into a new documented run folder. Bitwise continuation
+    assumes the same numerical implementation and software environment.
+    """
     model, state = load_checkpoint(Path(checkpoint))
     return _execute(
         model,
