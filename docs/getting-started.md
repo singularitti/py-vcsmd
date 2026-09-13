@@ -64,8 +64,7 @@ and output handling:
 ```python
 from pathlib import Path
 
-from vcsmd import initialize, prepare, simulate
-from vcsmd.io import load_config
+from vcsmd import initialize, load_config, prepare, simulate
 
 config = load_config(Path("examples/input-01.toml"))
 model, initial_conditions = prepare(config)
@@ -86,13 +85,12 @@ arrays. Iteration with `simulate` does not write files.
 temperature rescaling or minimization quenching. `result.state` is the state
 **after** those controller actions, ready for the next step or a checkpoint.
 
-For application-managed outputs, use `vcsmd.execution.run` instead:
+For application-managed outputs, use the top-level `run` function instead:
 
 ```python
 from pathlib import Path
 
-from vcsmd.execution import run
-from vcsmd.io import load_config
+from vcsmd import load_config, run
 
 source = Path("examples/input-01.toml")
 report = run(
@@ -107,6 +105,11 @@ print(report.status.value, report.completed_steps)
 These are two ways to execute the same full workload. The
 [public API reference](reference/public-api.md) documents the functional
 interface; the [execution reference](reference/execution.md) covers file writing.
+
+The package supports `from vcsmd import *` for interactive use. It imports the
+names listed in `vcsmd.__all__`, including the configuration, simulation,
+checkpoint, and execution facades. Explicit imports are preferred in maintained
+code because they make dependencies visible.
 
 ## Continue a native checkpoint
 

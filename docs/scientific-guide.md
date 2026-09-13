@@ -232,7 +232,7 @@ The public checkpoint functions are:
 ```python
 from pathlib import Path
 
-from vcsmd.io import load_checkpoint, save_checkpoint
+from vcsmd import load_checkpoint, save_checkpoint
 
 save_checkpoint(Path("checkpoint.npz"), model, state)
 model, state = load_checkpoint(Path("checkpoint.npz"))

@@ -6,8 +6,8 @@ single boundary for native JSON, YAML, TOML, and checkpoint files.
 
 from pathlib import Path
 
-from ..api import SimulationState
 from ..models import NumericalModel
+from ..simulation import SimulationState
 from . import checkpoint
 from .config import config_from_mapping, config_to_mapping, load_config, save_config
 

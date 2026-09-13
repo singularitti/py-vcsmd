@@ -18,13 +18,13 @@ from enum import Enum
 from pathlib import Path
 
 from . import dynamics
-from .api import SimulationState
 from .config import SimulationConfig, prepare
 from .geometry import cell_parameters
 from .io import save_config
 from .io.checkpoint import load_checkpoint, save_checkpoint
 from .models import InitialConditions, NumericalModel, Observables, StepResult
 from .models import SimulationState as NumericalState
+from .simulation import SimulationState
 
 
 class RunStatus(Enum):

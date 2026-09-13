@@ -22,9 +22,16 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
+from vcsmd import (
+    RunStatus,
+    config_from_mapping,
+    config_to_mapping,
+    load_config,
+    resume,
+    run,
+    save_config,
+)
 from vcsmd.compat import convert_legacy_run, parse_legacy_input, split_legacy_examples
-from vcsmd.execution import RunStatus, resume, run
-from vcsmd.io import config_from_mapping, config_to_mapping, load_config, save_config
 from vcsmd.io.checkpoint import load_checkpoint
 
 

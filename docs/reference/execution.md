@@ -1,30 +1,31 @@
 # Execution and run folders
 
-`vcsmd.execution` is the file-writing application boundary. The numerical API
+`vcsmd.execution` is the file-writing application boundary, surfaced through
+the top-level `vcsmd` facade. The numerical API
 does not access files or emit progress output. `run` creates a documented run
 folder with configuration provenance, CSV streams, checkpoints, and metadata;
 `resume` continues a native checkpoint for additional steps.
 
 ```{eval-rst}
-.. autoclass:: vcsmd.execution.RunStatus
+.. autoclass:: vcsmd.RunStatus
    :members:
    :undoc-members:
    :show-inheritance:
 ```
 
 ```{eval-rst}
-.. autoclass:: vcsmd.execution.RunReport
+.. autoclass:: vcsmd.RunReport
    :members:
    :undoc-members:
    :show-inheritance:
 ```
 
 ```{eval-rst}
-.. autofunction:: vcsmd.execution.run
+.. autofunction:: vcsmd.run
 ```
 
 ```{eval-rst}
-.. autofunction:: vcsmd.execution.resume
+.. autofunction:: vcsmd.resume
 ```
 
 `resume` preserves acceleration history, reference geometry, running

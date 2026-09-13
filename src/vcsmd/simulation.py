@@ -1,4 +1,9 @@
-"""Quantity-bearing public results over the pure normalized solver."""
+"""Unit-aware simulation functions and results, exported from :mod:`vcsmd`.
+
+Internal adapters import this module directly. The package initializer only
+re-exports its public objects, so implementations need not import the package
+facade while it is being initialized.
+"""
 
 from __future__ import annotations
 
@@ -180,7 +185,7 @@ def initialize(
 def step(model: NumericalModel, state: SimulationState) -> StepResult:
     """Advance one Beeman step without changing ``model`` or ``state``.
 
-    Pass a state returned by this public API or ``vcsmd.io.load_checkpoint``.
+    Pass a state returned by this public API or ``vcsmd.load_checkpoint``.
     The result includes dimensional observables and any rescaling or quenching
     events. Its next state can be passed back to this function unchanged.
     """

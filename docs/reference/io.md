@@ -1,24 +1,25 @@
 # Native configuration and checkpoint I/O
 
-The `vcsmd.io` namespace is the recommended facade over the format-specific
-modules.
+The top-level `vcsmd` namespace is the recommended facade over the
+format-specific I/O modules. The implementation remains organized under
+`vcsmd.io`.
 
 ## Configuration mappings and files
 
 ```{eval-rst}
-.. autofunction:: vcsmd.io.config.config_from_mapping
+.. autofunction:: vcsmd.config_from_mapping
 ```
 
 ```{eval-rst}
-.. autofunction:: vcsmd.io.config.config_to_mapping
+.. autofunction:: vcsmd.config_to_mapping
 ```
 
 ```{eval-rst}
-.. autofunction:: vcsmd.io.config.load_config
+.. autofunction:: vcsmd.load_config
 ```
 
 ```{eval-rst}
-.. autofunction:: vcsmd.io.config.save_config
+.. autofunction:: vcsmd.save_config
 ```
 
 `load_config` selects JSON, YAML, or TOML from the path suffix. All three
@@ -28,14 +29,14 @@ records with `value` and `unit`; dimensional arrays use `values` and `unit`.
 ## Checkpoints
 
 ```{eval-rst}
-.. autofunction:: vcsmd.io.load_checkpoint
+.. autofunction:: vcsmd.load_checkpoint
 ```
 
 ```{eval-rst}
-.. autofunction:: vcsmd.io.save_checkpoint
+.. autofunction:: vcsmd.save_checkpoint
 ```
 
-The facade wraps a loaded numerical state as `vcsmd.api.SimulationState` and
+The facade wraps a loaded numerical state as `vcsmd.SimulationState` and
 requires that public state when saving. Native archives use named numeric
 arrays and do not use Python pickle objects.
 

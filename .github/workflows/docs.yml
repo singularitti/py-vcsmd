@@ -30,9 +30,10 @@ jobs:
           from pathlib import Path
 
           required = {
-              "public-api": "vcsmd.api.initialize",
-              "configuration": "vcsmd.config.SimulationConfig.steps",
-              "io": "vcsmd.io.load_checkpoint",
+              "public-api": "vcsmd.initialize",
+              "configuration": "vcsmd.SimulationConfig.steps",
+              "io": "vcsmd.load_checkpoint",
+              "execution": "vcsmd.run",
               "numerics": "vcsmd.dynamics.step",
           }
           for page, target in required.items():

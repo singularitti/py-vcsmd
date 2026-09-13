@@ -33,7 +33,7 @@ not a replacement for the complete evolving state.
 ```text
 src/vcsmd/
   __init__.py          convenient public imports
-  api.py               public states/results with physical units
+  simulation.py        public states/results with physical units
   config.py            Structure, SimulationConfig, and normalization
   units.py             Pint registry and quantity conversion
   models.py            enums and normalized numerical data structures
@@ -77,7 +77,7 @@ flowchart TD
     State --> Step[dynamics.step]
     Model --> Step
     Step --> Next[Next state, observables, events]
-    Next --> Public[api: attach physical units for Python callers]
+    Next --> Public[simulation: attach physical units for Python callers]
     Next --> Output[execution and io: write native results]
 ```
 
@@ -107,8 +107,7 @@ The public API is imported from `vcsmd`:
 ```python
 from pathlib import Path
 
-from vcsmd import initialize, prepare, simulate
-from vcsmd.io import load_config
+from vcsmd import initialize, load_config, prepare, simulate
 
 config = load_config(Path("examples/input-01.toml"))
 model, initial = prepare(config)
@@ -119,19 +118,33 @@ for result in simulate(model, state, steps=config.steps):
     temperature = result.observables.atomic_temperature.to("kelvin")
 ```
 
+The same names are available through the supported `from vcsmd import *`
+interactive form because `vcsmd.__all__` defines the export list. Explicit
+imports are clearer for maintained code.
+
+The package initializer re-exports objects from their implementation modules.
+For example, `execution.py` imports `SimulationState` directly from
+`simulation.py`; it does not import the name back from `vcsmd`. This keeps the
+dependency direction consistent while the package is being initialized.
+Wildcard imports do not create a circular dependency by themselves. A cycle
+would arise if an implementation imported an object from the package root
+before the initializer had finished defining that object. Internal modules
+therefore use explicit imports from their actual dependencies. `__all__`
+controls which names callers receive; it is not a circular-import workaround.
+
 This is the first original full 1,000-step workload. The loop itself writes no
-files. Use `vcsmd.execution.run(config)` or the CLI for persistent output.
+files. Use top-level `run(config)` or the CLI for persistent output.
 
 There are two state representations with the same scientific fields:
 
 | Location | Intended use | Dimensional representation |
 | --- | --- | --- |
-| `vcsmd.SimulationState`, implemented in `api.py` | Ordinary Python callers | Properties such as `cell`, `time`, and velocities are Pint quantities |
+| `vcsmd.SimulationState`, implemented in `simulation.py` | Ordinary Python callers | Properties such as `cell`, `time`, and velocities are Pint quantities |
 | `vcsmd.models.SimulationState` | Numerical kernels and low-level persistence | Float64 arrays and scalars in documented internal units |
 
 The public state wraps its numerical state in the explicit `numerical`
 attribute. Most callers do not need to access that attribute. Similarly,
-`vcsmd.io.load_checkpoint` returns a public state ready for `vcsmd.simulate`;
+the top-level `load_checkpoint` returns a public state ready for `simulate`;
 the lower-level checkpoint module returns normalized objects for execution.
 
 The internal units are bohr, Rydberg, and `rydberg_time = ℏ/Ry`. The corresponding
@@ -264,7 +277,7 @@ historical values and are distinct from complete native trajectories. See the
 
 ## Reading order and extension points
 
-Read `api.py` and `config.py` first for the calling interface, then `models.py`
+Read `simulation.py` and `config.py` first for the calling interface, then `models.py`
 for explicit state. Continue with `dynamics.py` for the sequence above, followed
 by `potentials.py` and `cell_dynamics.py` alongside the scientific guide.
 `execution.py` and the file adapters are useful when working on output or

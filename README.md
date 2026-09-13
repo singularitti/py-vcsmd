@@ -51,13 +51,12 @@ Initialization behavior is also an enum: `InitializationMode.THERMAL` or `Initia
 
 ## Python interface
 
-Use `vcsmd.io.load_config` to parse a native file, `prepare` to resolve quantities and formulation-specific units, and the functional API to evolve an immutable state:
+Use the top-level `vcsmd` API to parse a native file, resolve quantities and formulation-specific units, and evolve an immutable state:
 
 ```python
 from pathlib import Path
 
-from vcsmd import initialize, prepare, simulate
-from vcsmd.io import load_config
+from vcsmd import initialize, load_config, prepare, simulate
 
 config = load_config(Path("examples/input-01.toml"))
 model, initial_conditions = prepare(config)
@@ -71,13 +70,31 @@ for result in simulate(model, state, steps=config.steps):
 
 The normalized `NumericalModel` and `InitialConditions` are immutable and use float64 arrays in bohr, Rydberg, Rydberg time, and the corresponding mass units. The public `SimulationState` and `Observables` returned by `vcsmd.initialize`, `vcsmd.step`, and `vcsmd.simulate` expose dimensional fields as Pint quantities. Published arrays are read-only and each evolution step owns its returned arrays.
 
+For an interactive session, the package also supports wildcard imports:
+
+```python
+from pathlib import Path
+
+from vcsmd import *
+
+config = load_config(Path("examples/input-01.toml"))
+model, initial_conditions = prepare(config)
+state = initialize(model, initial_conditions, seed=config.seed)
+for result in simulate(model, state, steps=config.steps):
+    state = result.state
+```
+
+`vcsmd.__all__` defines the names included by `from vcsmd import *`. Explicit
+imports are recommended in maintained application and library code because they
+make dependencies visible; the star form is supported as a convenient interactive
+workflow.
+
 For a complete application run, use the file-writing orchestration layer:
 
 ```python
 from pathlib import Path
 
-from vcsmd.execution import run
-from vcsmd.io import load_config
+from vcsmd import load_config, run
 
 report = run(
     load_config(Path("examples/input-01.toml")),
@@ -122,7 +139,7 @@ Legacy conversion is one-way. It recognizes historical filenames, fixed-width re
 
 ## Run folders and outputs
 
-`vcsmd.execution.run` creates an hour-stamped, attempt-numbered directory containing `inputs/`, `outputs/`, and `outputs/checkpoints/`. The folder README records its purpose, creation time, inputs, provenance, outputs, and completion status. `run_metadata.json` records the schema, code and dependency hashes, configuration provenance, units, requested and completed steps, and failure information without exposing machine-specific paths.
+The top-level `vcsmd.run` function creates an hour-stamped, attempt-numbered directory containing `inputs/`, `outputs/`, and `outputs/checkpoints/`. The folder README records its purpose, creation time, inputs, provenance, outputs, and completion status. `run_metadata.json` records the schema, code and dependency hashes, configuration provenance, units, requested and completed steps, and failure information without exposing machine-specific paths.
 
 Native outputs include unit-labelled CSV streams for observables, cell history, trajectories, and controller events. `checkpoint.npz` and periodic checkpoint archives use named non-pickled arrays and preserve the cell, positions, velocities, current and previous accelerations, reference cell, running accumulators, controller counter, and all model parameters needed for continuation. Observables describe the completed integration step before temperature rescaling and minimization quenching; trajectories and checkpoints represent the state after those events.
 

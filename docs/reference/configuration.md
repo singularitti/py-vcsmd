@@ -8,14 +8,14 @@ the functions in the [I/O reference](io.md).
 ## Unit-aware configuration
 
 ```{eval-rst}
-.. autoclass:: vcsmd.config.Structure
+.. autoclass:: vcsmd.Structure
    :members:
    :undoc-members:
    :show-inheritance:
 ```
 
 ```{eval-rst}
-.. autoclass:: vcsmd.config.LennardJones
+.. autoclass:: vcsmd.LennardJones
    :members:
    :undoc-members:
    :show-inheritance:
@@ -25,14 +25,14 @@ All particles use one global Lennard–Jones parameter pair; `species` labels do
 not select separate interactions or mixing rules.
 
 ```{eval-rst}
-.. autoclass:: vcsmd.config.SimulationConfig
+.. autoclass:: vcsmd.SimulationConfig
    :members:
    :undoc-members:
    :show-inheritance:
 ```
 
 ```{eval-rst}
-.. autofunction:: vcsmd.config.prepare
+.. autofunction:: vcsmd.prepare
 ```
 
 ## Enums and controller settings
@@ -40,28 +40,28 @@ not select separate interactions or mixing rules.
 These definitions are also re-exported from `vcsmd`:
 
 ```{eval-rst}
-.. autoclass:: vcsmd.models.SimulationMode
+.. autoclass:: vcsmd.SimulationMode
    :members:
    :undoc-members:
    :show-inheritance:
 ```
 
 ```{eval-rst}
-.. autoclass:: vcsmd.models.InitializationMode
+.. autoclass:: vcsmd.InitializationMode
    :members:
    :undoc-members:
    :show-inheritance:
 ```
 
 ```{eval-rst}
-.. autoclass:: vcsmd.models.EventKind
+.. autoclass:: vcsmd.EventKind
    :members:
    :undoc-members:
    :show-inheritance:
 ```
 
 ```{eval-rst}
-.. autoclass:: vcsmd.models.TemperatureControl
+.. autoclass:: vcsmd.TemperatureControl
    :members:
    :undoc-members:
    :show-inheritance:
@@ -77,14 +77,14 @@ These immutable types are the advanced numerical boundary returned by
 `prepare`. Their arrays use internal units and are read-only.
 
 ```{eval-rst}
-.. autoclass:: vcsmd.models.NumericalModel
+.. autoclass:: vcsmd.NumericalModel
    :members:
    :undoc-members:
    :show-inheritance:
 ```
 
 ```{eval-rst}
-.. autoclass:: vcsmd.models.InitialConditions
+.. autoclass:: vcsmd.InitialConditions
    :members:
    :undoc-members:
    :show-inheritance:

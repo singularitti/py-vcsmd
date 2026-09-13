@@ -21,15 +21,15 @@ from pathlib import Path
 import numpy as np
 
 import vcsmd
-from vcsmd.cli import main as cli_main
-from vcsmd.compat import parse_legacy_input, split_legacy_examples
-from vcsmd.config import prepare
-from vcsmd.io import (
+from vcsmd import (
     config_from_mapping,
     load_checkpoint,
     load_config,
+    prepare,
     save_checkpoint,
 )
+from vcsmd.cli import main as cli_main
+from vcsmd.compat import parse_legacy_input, split_legacy_examples
 
 
 def equal(first: object, second: object) -> bool:
@@ -72,6 +72,60 @@ def main() -> int:
     for name in modules:
         importlib.import_module(name)
     record("All installed package modules import", True, f"{len(modules)} modules")
+    wildcard_names: dict[str, object] = {}
+    exec("from vcsmd import *", {}, wildcard_names)  # noqa: S102 -- verify import semantics
+    record(
+        "Wildcard import exposes exactly the declared public API",
+        set(wildcard_names) == set(vcsmd.__all__)
+        and all(
+            value is getattr(vcsmd, name) for name, value in wildcard_names.items()
+        ),
+    )
+    record(
+        "Package root provides the complete native workflow",
+        {
+            "SimulationConfig",
+            "SimulationMode",
+            "SimulationState",
+            "Observables",
+            "StepResult",
+            "prepare",
+            "initialize",
+            "step",
+            "simulate",
+            "run",
+            "resume",
+            "load_config",
+            "save_config",
+            "load_checkpoint",
+            "save_checkpoint",
+        }.issubset(wildcard_names),
+    )
+    for first_module in (
+        "vcsmd.simulation",
+        "vcsmd.io",
+        "vcsmd.io.checkpoint",
+        "vcsmd.execution",
+        "vcsmd.dynamics",
+    ):
+        probe = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                (
+                    f"import {first_module}; "
+                    "from vcsmd import *; "
+                    "import vcsmd.simulation, vcsmd.io, vcsmd.execution; "
+                    "assert SimulationState is vcsmd.simulation.SimulationState; "
+                    "assert load_checkpoint is vcsmd.io.load_checkpoint; "
+                    "assert run is vcsmd.execution.run"
+                ),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        record(f"Fresh import starting with {first_module}", probe.returncode == 0)
     result = subprocess.run(
         [sys.executable, "-m", "vcsmd", "--help"],
         capture_output=True,

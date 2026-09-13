@@ -15,11 +15,10 @@ from pathlib import Path
 import numpy as np
 
 import vcsmd
+from vcsmd import load_config, prepare
 from vcsmd.cell_dynamics import cell_acceleration
-from vcsmd.config import prepare
 from vcsmd.dynamics import initialize
 from vcsmd.geometry import cell_geometry, wrap_fractional
-from vcsmd.io import load_config
 from vcsmd.io.checkpoint import load_checkpoint
 from vcsmd.models import RunningAverages
 from vcsmd.potentials import evaluate_lennard_jones

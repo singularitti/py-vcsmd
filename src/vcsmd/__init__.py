@@ -1,6 +1,31 @@
-"""Unit-aware, functional variable-cell molecular dynamics."""
+"""Unit-aware, functional variable-cell molecular dynamics.
 
-from .api import (
+Import the native API directly from this package. ``__all__`` defines the
+supported wildcard-import namespace; explicit imports are clearer in maintained
+code. Implementations import their dependencies from concrete submodules rather
+than importing objects back from this facade.
+"""
+
+from .config import LennardJones, SimulationConfig, Structure, prepare
+from .execution import RunReport, RunStatus, resume, run
+from .io import (
+    config_from_mapping,
+    config_to_mapping,
+    load_checkpoint,
+    load_config,
+    save_checkpoint,
+    save_config,
+)
+from .models import (
+    EventKind,
+    InitialConditions,
+    InitializationMode,
+    NumericalModel,
+    SimulationEvent,
+    SimulationMode,
+    TemperatureControl,
+)
+from .simulation import (
     Observables,
     SimulationState,
     StepResult,
@@ -9,24 +34,35 @@ from .api import (
     step,
     with_units,
 )
-from .config import LennardJones, SimulationConfig, Structure, prepare
-from .models import EventKind, InitializationMode, SimulationMode, TemperatureControl
 from .units import Quantity, ureg
 
 __all__ = [
     "EventKind",
+    "InitialConditions",
     "InitializationMode",
     "LennardJones",
+    "NumericalModel",
     "Observables",
     "Quantity",
+    "RunReport",
+    "RunStatus",
     "SimulationConfig",
+    "SimulationEvent",
     "SimulationMode",
     "SimulationState",
     "StepResult",
     "Structure",
     "TemperatureControl",
+    "config_from_mapping",
+    "config_to_mapping",
     "initialize",
+    "load_checkpoint",
+    "load_config",
     "prepare",
+    "resume",
+    "run",
+    "save_checkpoint",
+    "save_config",
     "simulate",
     "step",
     "ureg",

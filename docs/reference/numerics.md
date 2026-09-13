@@ -116,4 +116,4 @@ parameter pair from the normalized model.
 
 The normalized solver uses bohr, Rydberg, `rydberg_time`, and the corresponding
 mass units. Unit conversion at the application boundary is handled by
-`vcsmd.config` and `vcsmd.api`.
+`vcsmd.config` and `vcsmd.simulation`.
