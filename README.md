@@ -1,12 +1,14 @@
 # Python VCSMD
 
-`vcsmd` is a Python 3.10+ implementation of classical variable-cell molecular dynamics with a pure NumPy numerical core and a Pint-aware application boundary. It implements the eight active fixed-cell, Parrinello–Rahman, modified-metric, and reference-strain formulations described by the historical VCSMD project. The numerical model contains resolved arrays and scalars; configuration files, checkpoints, legacy files, progress, and output writing live in adapters around that core.
+`vcsmd` is a Python 3.9+ implementation of classical variable-cell molecular dynamics with a pure NumPy numerical core and a Pint-aware application boundary. It implements the eight active fixed-cell, Parrinello–Rahman, modified-metric, and reference-strain formulations described by the historical VCSMD project. The numerical model contains resolved arrays and scalars; configuration files, checkpoints, legacy files, progress, and output writing live in adapters around that core.
 
 The scientific scope is hydrostatic-pressure classical Lennard–Jones dynamics. The active potential is configurable through global `sigma` and `epsilon` parameters, with the original argon values available as the named `argon` preset. Tabulated potentials, electronic-structure calculations, tensor external stress, crystal-standardization operations, and inactive historical experiments are outside this package.
 
+To understand the implementation, start with the [code structure and walkthrough](docs/architecture.md). It explains the objects, module responsibilities, units, and the sequence of one integration step. The [scientific guide](docs/scientific-guide.md) develops the equations, and the [validation report](docs/validation.md) records what has been checked.
+
 ## Install
 
-The package requires Python 3.10 or newer. With [uv](https://docs.astral.sh/uv/):
+The package requires Python 3.9 or newer. With [uv](https://docs.astral.sh/uv/):
 
 ```bash
 uv sync
@@ -14,6 +16,21 @@ uv run vcsmd --help
 ```
 
 The package can also be installed into an existing compatible environment with `pip install .`. NumPy, Pint, PyYAML, and TOML support are installed from the project dependencies.
+
+## Documentation website
+
+The documentation site uses Sphinx, MyST Markdown, and Furo, with searchable
+Python API references, rendered equations, and architecture diagrams. Building
+the docs requires Python 3.12 or newer:
+
+```bash
+uv sync --group docs --no-default-groups --python 3.14
+uv run --group docs --no-default-groups sphinx-build -W --keep-going -b html docs docs/_build/html
+```
+
+Open `docs/_build/html/index.html`, or use the live preview command in the
+[documentation build guide](docs/documentation.md). The build reads docstrings
+and the original example files without executing simulations.
 
 ## Simulation modes
 
@@ -118,3 +135,5 @@ All eight supplied workloads completed at their original sizes, parameters, and 
 The fixtures exercise `fixed-dyn`, `metric-dyn`, and `metric-min`. The five other modes are implemented but have no suitable supplied full-trajectory cases. An executed Fortran reference and complete historical output fixtures were unavailable. Completion and finite values do not establish convergence or energy conservation for the original parameters.
 
 The [scientific guide](docs/scientific-guide.md) documents equations, unit conventions, numerical boundaries, and corrected historical defects. The [validation report](docs/validation.md) records results, preserved CSV/checkpoint/PDF artifacts, and the limits of the evidence.
+
+The [release guide](docs/releasing.md) explains the CI checks, PyPI Trusted Publishing setup, and package version updates required for publication.
