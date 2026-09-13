@@ -11,23 +11,25 @@ Mermaid architecture diagram.
 Run these commands from the repository root with **Python 3.12 or newer**:
 
 ```bash
-uv sync --locked --group docs --no-default-groups
+uv sync --group docs --no-default-groups
 ```
 
 If your selected Python is older, select a compatible interpreter explicitly:
 
 ```bash
-uv sync --locked --group docs --no-default-groups --python 3.14
+uv sync --group docs --no-default-groups --python 3.14
 ```
 
 The `docs` dependency group is separate from runtime dependencies. The package
-declares Python 3.9+ support. `uv.lock` records the resolved documentation tools;
-commit it alongside changes to the dependency declarations.
+declares Python 3.9+ support. `uv sync` creates a local `uv.lock` automatically,
+but the lockfile is ignored by Git and is not required in a checkout. CI
+resolves the dependency ranges in `pyproject.toml` on each fresh run. Builds
+can therefore pick up newer compatible releases over time.
 
 ## Build HTML
 
 ```bash
-uv run --locked --group docs --no-default-groups sphinx-build -W --keep-going -b html docs docs/_build/html
+uv run --group docs --no-default-groups sphinx-build -W --keep-going -b html docs docs/_build/html
 ```
 
 The site is written to `docs/_build/html/index.html`. `-W` makes warnings fail the
@@ -43,7 +45,7 @@ folders. Example downloads are copied from `examples/`; simulation results in
 ## Preview while editing
 
 ```bash
-uv run --locked --group docs --no-default-groups sphinx-autobuild --watch src --port 8000 docs docs/_build/html
+uv run --group docs --no-default-groups sphinx-autobuild --watch src --port 8000 docs docs/_build/html
 ```
 
 Open `http://localhost:8000` in a browser. Changes to documentation and package

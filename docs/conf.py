@@ -40,7 +40,7 @@ html_theme_options = {
     },
 }
 
-# Pin the browser-side renderers as well as the Python dependencies in uv.lock.
+# Pin browser-side renderers independently of the Python dependency ranges.
 mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"
 mermaid_version = "11.12.1"
 mermaid_init_config = {"startOnLoad": False, "securityLevel": "strict"}
