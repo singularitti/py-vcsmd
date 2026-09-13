@@ -252,8 +252,6 @@ The Python implementation deliberately corrects several demonstrable defects in 
 
 The original source and accompanying project notes are useful provenance but are secondary to the equations implemented here. Historical code identifiers and filenames are confined to this compatibility and discrepancy discussion so that the native API remains organized around scientific concepts.
 
-The implementation was reconciled against the source and the 2017 notes, rather than treating either as an infallible specification:
-
 | Topic | Evidence in the historical material | Resolution |
 | --- | --- | --- |
 | Applied pressure | The input notes describe scalar pressure. The tensor equation in `invariant-md.tex`, lines 181–209, writes the pressure subtraction without an explicit identity matrix; `celq.f`, lines 1088–1106, subtracts the scalar only on the diagonal. | Interpret external pressure as $P I$. The internal virial remains a tensor; external tensor stress is outside this interface. |
@@ -274,6 +272,6 @@ The variable-cell equations are grounded in the formal literature:
 2. R. M. Wentzcovitch, “Invariant molecular-dynamics approach to structural phase transformations,” *Physical Review B* 44, 2358 (1991), DOI [10.1103/PhysRevB.44.2358](https://doi.org/10.1103/PhysRevB.44.2358).
 3. D. Beeman, “Some multistep methods for use in molecular dynamics calculations,” *Journal of Computational Physics* 20, 130–139 (1976), DOI [10.1016/0021-9991(76)90059-0](https://doi.org/10.1016/0021-9991(76)90059-0).
 4. J. E. Jones, “On the determination of molecular fields. II. From the equation of state of a gas,” *Proceedings of the Royal Society A* 106, 463–477 (1924), DOI [10.1098/rspa.1924.0082](https://doi.org/10.1098/rspa.1924.0082).
-5. R. M. Wentzcovitch, J. L. Martins, and G. D. Price, “Ab Initio Molecular Dynamics with Variable Cell Shape: Application to MgSiO₃,” *Physical Review Letters* 70, 3947–3950 (1993), DOI [10.1103/PhysRevLett.70.3947](https://doi.org/10.1103/PhysRevLett.70.3947). This is the attached paper; its electronic-structure component is broader than the active classical source.
+5. R. M. Wentzcovitch, J. L. Martins, and G. D. Price, “Ab Initio Molecular Dynamics with Variable Cell Shape: Application to MgSiO₃,” *Physical Review Letters* 70, 3947–3950 (1993), DOI [10.1103/PhysRevLett.70.3947](https://doi.org/10.1103/PhysRevLett.70.3947).
 
 The project’s `MSAE-E6237` notes and the historical source are retained as secondary implementation documentation. Full-run validation claims belong in the executed validation report. In particular, fixed-cell, modified-metric dynamics, and modified-metric minimization examples do not by themselves establish full-trajectory validation for the other formulations, and direct Fortran parity requires an executed reference run.
