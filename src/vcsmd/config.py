@@ -1,7 +1,5 @@
 """Unit-aware configuration and pure normalization, independent of file formats."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -75,7 +73,7 @@ class LennardJones:
     )
 
     @classmethod
-    def original_argon(cls) -> LennardJones:
+    def original_argon(cls) -> "LennardJones":
         """The numerical parameter choices of the original active force model."""
         return cls(Quantity(3.4 / 0.529177, LENGTH), Quantity(0.0104 / 13.6058, ENERGY))
 

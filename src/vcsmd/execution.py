@@ -1,7 +1,5 @@
 """File-writing orchestration. Numerical modules never import this module."""
 
-from __future__ import annotations
-
 import csv
 import hashlib
 import importlib.metadata

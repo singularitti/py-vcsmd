@@ -4,8 +4,6 @@ No reduced trajectories are created. Run from the repository root with
 ``uv run python scripts/validate_input_formats.py``.
 """
 
-from __future__ import annotations
-
 import argparse
 import csv
 import hashlib

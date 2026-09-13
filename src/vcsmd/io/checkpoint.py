@@ -6,8 +6,6 @@ member is a scalar UTF-8 JSON metadata value.  This prevents an old or
 partially compatible archive from being mistaken for a native restart.
 """
 
-from __future__ import annotations
-
 import json
 import os
 import tempfile

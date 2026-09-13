@@ -4,8 +4,6 @@ No trajectory is shortened and no simulation parameters or random seeds change.
 Use --analyze RUN_DIRECTORY to regenerate analysis without integrating again.
 """
 
-from __future__ import annotations
-
 import argparse
 import csv
 import hashlib

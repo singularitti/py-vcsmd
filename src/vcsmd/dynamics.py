@@ -1,7 +1,5 @@
 """Pure initialization and Beeman evolution in normalized numerical units."""
 
-from __future__ import annotations
-
 from collections.abc import Iterator
 
 import numpy as np

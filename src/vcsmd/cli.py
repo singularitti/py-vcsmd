@@ -1,7 +1,5 @@
 """Command-line boundary for native execution and isolated legacy conversion."""
 
-from __future__ import annotations
-
 import argparse
 from datetime import datetime
 from pathlib import Path

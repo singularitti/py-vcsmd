@@ -4,8 +4,6 @@ This is an auditable acceptance workflow, not a generator of synthetic cases.
 Invoke after installing the project's dev dependencies (for PDF plots).
 """
 
-from __future__ import annotations
-
 import argparse
 import csv
 import hashlib

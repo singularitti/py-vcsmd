@@ -4,8 +4,6 @@ No trajectory is integrated here and no synthetic or reduced simulation is
 created. Derivative probes evaluate the full periodic system from saved runs.
 """
 
-from __future__ import annotations
-
 import argparse
 import ast
 import csv

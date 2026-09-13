@@ -1,7 +1,5 @@
 """Quantities at the public boundary; numerical kernels do not import Pint."""
 
-from __future__ import annotations
-
 from typing import Any
 
 import numpy as np

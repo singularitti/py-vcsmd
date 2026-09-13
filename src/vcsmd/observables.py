@@ -1,7 +1,5 @@
 """Pure scalar reductions of the generalized mechanical state."""
 
-from __future__ import annotations
-
 import numpy as np
 
 from .cell_dynamics import cell_kinetic_energy

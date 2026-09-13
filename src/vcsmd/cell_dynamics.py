@@ -1,7 +1,5 @@
 """Cell metrics and generalized forces, expressed as small matrix operations."""
 
-from __future__ import annotations
-
 import numpy as np
 
 from .geometry import cell_geometry

@@ -4,8 +4,6 @@ The unit-aware user-facing configuration lives in :mod:`vcsmd.config`.
 This module deliberately has no file, configuration-parser, or Pint dependency.
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass, field
 from enum import Enum
 from numbers import Real

@@ -5,8 +5,6 @@ before validation.  Only this module turns serialized mode strings into enum
 members; the numerical core consequently never has to interpret file syntax.
 """
 
-from __future__ import annotations
-
 import json
 from collections.abc import Mapping
 from pathlib import Path

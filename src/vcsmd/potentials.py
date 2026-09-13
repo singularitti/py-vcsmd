@@ -1,7 +1,5 @@
 """Periodic Lennard--Jones interactions for the numerical core."""
 
-from __future__ import annotations
-
 from collections.abc import Iterator
 from dataclasses import dataclass
 

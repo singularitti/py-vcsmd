@@ -15,8 +15,6 @@ under ``inputs/compare_fortran_structures.py``.  It performs no integration and
 creates no additional simulation workload.
 """
 
-from __future__ import annotations
-
 import argparse
 import csv
 import re

@@ -4,8 +4,6 @@ This performs no time integration and creates no simulation workload. Temporary
 serialization files are removed when their checks finish.
 """
 
-from __future__ import annotations
-
 import argparse
 import csv
 import importlib

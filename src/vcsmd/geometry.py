@@ -5,8 +5,6 @@ matrix.  Fractional coordinates are row vectors in the public API, so Cartesian
 coordinates are obtained with ``fractional @ cell.T``.
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 import numpy as np
