@@ -1,0 +1,16 @@
+Test: md of Ar atom in fcc cell                        (title)
+nd                                                      (calc)
+ s   n                                                  (ic,iio)
+    11.000000                                           (alatt)
+    1    1    1                                         (nsc)
+       0.500000       0.500000       0.000000           (avec)
+       0.000000       0.500000       0.500000
+       0.500000       0.000000       0.500000
+     0.00100     0.00000                                         (cmass)
+    1                                                   (ntype)
+    1   Ar    36.00000                                  (natom,nameat,atmass)
+       0.000000       0.000000       0.000000           (rat)
+      40.000000                                         (rcut)
+    9    9    9                                         (ncell)
+ 2000 2010   10                                         (nstep,ntcheck,ntimes)
+    000.00000     0.00100   100.00000                   (temp,ttol,dt)

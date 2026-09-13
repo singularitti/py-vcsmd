@@ -24,9 +24,14 @@ The separate [documentation tools](documentation.md) require Python 3.12+.
 
 ## Choose an original configuration
 
-The repository contains eight complete original workloads. The first is
-available in equivalent TOML, JSON, and YAML forms; the
-[examples page](examples.md) includes downloads and the full TOML source.
+The repository contains eight complete original workloads. Each is available
+in equivalent TOML and YAML forms; the first is also available as
+{download}`JSON <../examples/input-01.json>`. The first native files are
+{download}`YAML <../examples/input-01.yaml>` and
+{download}`TOML <../examples/input-01.toml>`. The matching historical input
+data are in {download}`Fortran format <../examples/legacy/input-01.inp>`. The
+[examples page](examples.md) includes downloads for every workload and source
+listings for the first workload.
 
 The first configuration contains four argon atoms, uses `metric-dyn`, and
 requests all 1,000 original integration steps. Run it with:
@@ -37,6 +42,23 @@ uv run vcsmd run examples/input-01.toml --output-root runs
 
 This command executes the full workload and writes a new run folder. Viewing
 or building this documentation does not execute any of the displayed examples.
+
+## Import a legacy input
+
+The files under `examples/legacy/` are historical Fortran-format input data.
+`import-legacy` translates one file into a native JSON, YAML, or TOML
+configuration. The destination must not already exist, and its parent
+directory must exist:
+
+```bash
+mkdir -p runs
+uv run vcsmd import-legacy examples/legacy/input-01.inp runs/imported-input-01.yaml
+uv run vcsmd run runs/imported-input-01.yaml --output-root runs
+```
+
+The second command runs the imported native configuration. See the [legacy
+conversion guide](legacy-conversion.md) for the extracted files, imported
+schemas, and limitations of historical output conversion.
 
 ## Inspect the results
 

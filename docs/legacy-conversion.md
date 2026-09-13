@@ -3,7 +3,40 @@
 `vcsmd.compat` is the one-way boundary for the historical fixed-format
 VCSMD files. The numerical core does not import this adapter. Historical
 filenames and two-letter calculation modes are documented here because they
-are recognized only while importing old runs.
+are recognized only while importing old runs. The bundled `.inp` files are
+Fortran-format input data. They are source data for conversion, and this
+repository makes no claim that a Fortran reference workload was executed.
+
+## Bundled example inputs
+
+`examples/original-inputs.txt` is the unmodified collection of eight complete
+historical inputs. `split_legacy_examples` extracts each parsed `Input n:`
+block into `examples/legacy/input-01.inp` through `input-08.inp`. During that
+extraction, leading `\r` and `\n` separator characters are removed so the
+title record is the first record, as required by Fortran-format input readers.
+The remaining record columns and line content are preserved exactly through
+the final temperature/tolerance/timestep record. Collection separators are
+excluded, and the inactive table appended to input 8 remains only in
+`original-inputs.txt`.
+
+The [examples page](examples.md) links every TOML, YAML, and legacy file and
+includes the first YAML and legacy files directly in the documentation.
+
+## Import one input
+
+Create the destination directory before importing because `save_config` does
+not create parent directories. The CLI takes the legacy source first and the
+new configuration path second:
+
+```bash
+mkdir -p runs
+uv run vcsmd import-legacy examples/legacy/input-01.inp runs/imported-input-01.yaml
+uv run vcsmd run runs/imported-input-01.yaml --output-root runs
+```
+
+The import writes a native configuration without running a simulation. The
+following `run` command executes that native configuration and creates the
+usual documented run folder.
 
 ## Artifacts
 

@@ -108,7 +108,7 @@ The numerical functions do not access files, print, log, inspect the environment
 
 ## Native configuration
 
-JSON, YAML, and TOML use one schema and the same validation pipeline. Dimensional scalars are records with `value` and `unit`; dimensional arrays use `values` and `unit`. The first original full workload is provided in equivalent [TOML](examples/input-01.toml), [JSON](examples/input-01.json), and [YAML](examples/input-01.yaml) configurations. It contains four atoms, uses `metric-dyn`, and runs all 1,000 original steps. All eight unchanged workloads and their provenance are described in the [examples guide](examples/README.md).
+JSON, YAML, and TOML use one schema and the same validation pipeline. Dimensional scalars are records with `value` and `unit`; dimensional arrays use `values` and `unit`. Every original workload is provided in [TOML](examples/input-01.toml) and YAML (for example, [workload 1](examples/input-01.yaml)); the first is also available as [JSON](examples/input-01.json). The corresponding historical [Fortran-format input data](examples/legacy/input-01.inp) are available for one-way import. The first workload contains four atoms, uses `metric-dyn`, and runs all 1,000 original steps. All eight unchanged workloads and their provenance are described in the [examples guide](examples/README.md).
 
 The potential record accepts either `preset = "argon"` or explicit dimensional `sigma` and `epsilon` records. These alternatives cannot be combined. Fractional positions are dimensionless `(N, 3)` arrays; the cell is a dimensional `(3, 3)` matrix whose columns are the cell vectors. The application default seed is 119.
 
@@ -128,14 +128,32 @@ Resume a complete native checkpoint for a specified number of additional steps:
 uv run vcsmd resume runs/<run>/outputs/checkpoint.npz --steps 1000 --output-root runs
 ```
 
-Import one historical input into a native configuration, or convert available historical output files into native datasets and a conversion report:
+Import one historical input into a native configuration, then run the imported configuration:
 
 ```bash
-uv run vcsmd import-legacy <legacy-input> examples/imported.json
+mkdir -p runs
+uv run vcsmd import-legacy examples/legacy/input-01.inp runs/imported-input-01.yaml
+uv run vcsmd run runs/imported-input-01.yaml --output-root runs
+```
+
+To convert a historical run directory into native datasets and a conversion
+report, use:
+
+```bash
 uv run vcsmd convert-legacy <legacy-run-directory>
 ```
 
-Legacy conversion is one-way. It recognizes historical filenames, fixed-width records, Fortran exponents, historical unit conventions, mode codes, and coordinate-operation flags only inside `vcsmd.compat`. By default, the command creates an hour-stamped, attempt-numbered conversion directory under `runs/`. An explicit `--destination` must be empty and outside the source directory. Imported CSV datasets preserve the fields actually available in historical files; their schema is documented in the [compatibility guide](docs/legacy-conversion.md). Incomplete historical state is reported as incomplete data and is never presented as an exact native checkpoint.
+Legacy conversion is one-way. The files under `examples/legacy/` are
+Fortran-format input data. The adapter recognizes historical filenames,
+fixed-width records, Fortran exponents, historical unit conventions, mode
+codes, and coordinate-operation flags only inside `vcsmd.compat`. By default,
+the command creates an hour-stamped, attempt-numbered conversion directory
+under `runs/`. An explicit `--destination` must be empty and outside the
+source directory. Imported CSV datasets preserve the fields actually
+available in historical files; their schema is documented in the
+[compatibility guide](docs/legacy-conversion.md). Incomplete historical state
+is reported as incomplete data and is never presented as an exact native
+checkpoint.
 
 ## Run folders and outputs
 
@@ -150,6 +168,13 @@ Native checkpoints preserve exact continuation within the same numerical softwar
 All eight supplied workloads completed at their original sizes, parameters, and step counts: 9,200 integration steps. Continuing the second workload from its step-1,000 checkpoint to step 2,000 produced exactly the same complete final state as the uninterrupted run. Post-feature checks covered force and energy derivatives, periodic virial, cell-metric equations, deterministic initialization, input immutability, units, and format equivalence. Installation and imports were verified on Python 3.10 and 3.14.
 
 The fixtures exercise `fixed-dyn`, `metric-dyn`, and `metric-min`. The five other modes are implemented but have no suitable supplied full-trajectory cases. An executed Fortran reference and complete historical output fixtures were unavailable. Completion and finite values do not establish convergence or energy conservation for the original parameters.
+
+Format-coverage validation completed 16 full runs (18,400 integration steps)
+and 89/89 checks. All eight YAML and imported-legacy pairs matched their TOML
+counterparts in configuration comparison; each YAML and imported-legacy pair
+also matched in final checkpoints and complete CSV outputs. See the
+[validation report](docs/validation.md) for the evidence and reproduction
+command.
 
 The [scientific guide](docs/scientific-guide.md) documents equations, unit conventions, numerical boundaries, and corrected historical defects. The [validation report](docs/validation.md) records results, preserved CSV/checkpoint/PDF artifacts, and the limits of the evidence.
 

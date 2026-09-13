@@ -2,6 +2,59 @@
 
 Validation followed feature implementation. No reduced, synthetic, or altered simulation workloads were created. The original eight examples were converted with their original particle counts, physical parameters, and total step counts. The default local NumPy seed was 119; reproducing the historical random stream was deliberately outside scope.
 
+## Shipped YAML and individual legacy inputs
+
+The earlier checks below established serialization equivalence and parsed all
+eight legacy blocks, but did not execute every shipped YAML file separately.
+The examples now include all eight YAML configurations and eight individual
+Fortran-format `.inp` files. The latter preserve the original input records,
+removing leading blank collection separators so the title is the first record.
+
+The dedicated format validation completed **16 full runs and 89 checks**:
+
+| Input path | Full workloads completed | Integration steps |
+| --- | ---: | ---: |
+| Shipped YAML loaded through `load_config` | 8/8 | 9,200 |
+| Individual legacy inputs converted by the `import-legacy` CLI, then loaded from YAML | 8/8 | 9,200 |
+
+All original particle counts, physical parameters, and requested step counts
+were preserved. Historical inputs contain no random seed; the importer uses
+the native default seed 119, matching the shipped YAML configurations.
+Every run completed with finite observables at every step. For each
+workload, the YAML and imported legacy configurations matched the canonical
+configuration parsed from the source collection and the shipped TOML file.
+The first JSON file also matched. Each YAML/legacy pair produced exactly equal
+final checkpoint arrays and byte-identical complete CSV output streams.
+These are internal consistency checks of the Python import-and-run workflows.
+The subsequent [original Fortran comparison](fortran-comparison.md) compiled
+unmodified `celq.f` and completed all eight full reference workloads. It compares
+energies, pressure, temperature, volume and final structures using declared
+tolerances, with the full results and limitations documented separately.
+
+The local suite is retained under
+`runs/vcsmd-validation-yaml-legacy-inputs-results-2026-09-12-21-attempt-01/`:
+
+- `README.md` records creation time, purpose, input provenance, contents, and outcome.
+- `inputs/examples/` contains copied source examples, and `inputs/source_hashes.csv`
+  records their hashes and the copied validation script's hash.
+- `inputs/imported/` contains the native YAML files produced by the CLI.
+- `outputs/summary.csv` records all 16 full runs; `outputs/checks.csv` records
+  all 89 checks, and `outputs/import-*.log` records CLI import results.
+- `outputs/runs/` retains the complete CSV results, periodic and final checkpoints,
+  and per-run input/source snapshots with dependency versions and hashes.
+
+Run artifacts are ignored by Git. Reproduce this check from the repository
+root after installation:
+
+```bash
+uv run python scripts/validate_input_formats.py
+```
+
+The script executes all 18,400 steps; it does not create reduced test cases.
+The earlier implementation-validation results below describe the original
+suite. Its historical run folder is not present in this checkout; the new
+format-validation folder above contains the evidence from this verification.
+
 ## Original Fortran reference comparison
 
 The [executed original Fortran comparison](fortran-comparison.md) compiled
@@ -11,7 +64,7 @@ declared tolerances, with preserved inputs, outputs and reproducible scripts.
 
 ## Full original workloads
 
-The successful suite is preserved under `runs/vcsmd-validation-eight-inputs-results-2026-09-12-05-attempt-03/`. Every workload completed with finite observables:
+The original implementation report recorded the successful suite under `runs/vcsmd-validation-eight-inputs-results-2026-09-12-05-attempt-03/`. Its reported results follow; every workload completed with finite observables:
 
 | Original input | Mode | Particles | Requested and completed steps |
 | --- | --- | ---: | ---: |
