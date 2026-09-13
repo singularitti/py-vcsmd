@@ -2,6 +2,13 @@
 
 Validation followed feature implementation. No reduced, synthetic, or altered simulation workloads were created. The original eight examples were converted with their original particle counts, physical parameters, and total step counts. The default local NumPy seed was 119; reproducing the historical random stream was deliberately outside scope.
 
+## Original Fortran reference comparison
+
+The [executed original Fortran comparison](fortran-comparison.md) compiled
+unmodified `celq.f` and completed all eight full reference workloads. It
+compares energies, pressure, temperature, volume and final structures using
+declared tolerances, with preserved inputs, outputs and reproducible scripts.
+
 ## Full original workloads
 
 The successful suite is preserved under `runs/vcsmd-validation-eight-inputs-results-2026-09-12-05-attempt-03/`. Every workload completed with finite observables:
@@ -64,4 +71,4 @@ uv run python scripts/validate_full_examples.py --legacy-directory ../vcsmd
 uv run python scripts/check_numerics.py runs/<full-validation-directory>
 ```
 
-Five implemented modes have no supplied full-trajectory cases: `fixed-min`, `cell-dyn`, `cell-min`, `strain-dyn`, and `strain-min`. Their implementation has equation/source review but must not be described as fully trajectory-validated. No Fortran compiler/reference execution was available, so direct numerical parity is unverified. The attached paper's electronic-structure calculations and tensor external stress remain outside the scientific scope.
+Five implemented modes have no supplied full-trajectory cases: `fixed-min`, `cell-dyn`, `cell-min`, `strain-dyn`, and `strain-min`. Their implementation has equation/source review but must not be described as fully trajectory-validated. The [executed Fortran comparison](fortran-comparison.md) covers the eight supplied workloads in the other three modes, using declared tolerances rather than exact equality. The attached paper's electronic-structure calculations and tensor external stress remain outside the scientific scope.

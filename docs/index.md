@@ -58,6 +58,7 @@ legacy-conversion
 architecture
 scientific-guide
 validation
+fortran-comparison
 ```
 
 ```{toctree}
